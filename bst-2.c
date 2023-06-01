@@ -49,7 +49,7 @@ int main()
     printf("김민서 2022040010");	
 	char command;
 	int key;
-	Node* head = NULL;
+	Node* head = NULL;  //헤드 초기화
 
 	do{
 		printf("\n\n");
@@ -63,9 +63,9 @@ int main()
 		printf("----------------------------------------------------------------\n");
 
 		printf("Command = ");
-		scanf(" %c", &command);
+		scanf(" %c", &command);  //명령 문자 입력
 
-		switch(command) {
+		switch(command) {  //케이스에 따른 함수 실행 
 		case 'z': case 'Z':
 			initializeBST(&head);
 			break;
@@ -108,12 +108,12 @@ int main()
 	return 1;
 }
 
-int initializeBST(Node** h) {
+int initializeBST(Node** h) {  //bst-2초기화
 
-	if(*h != NULL)
+	if(*h != NULL)  //트리가 NULL이 아니면 메모리 할당 해제
 		freeBST(*h);
 
-	*h = (Node*)malloc(sizeof(Node));
+	*h = (Node*)malloc(sizeof(Node));  //헤드에 메모리 할당
 	(*h)->left = NULL;	
 	(*h)->right = *h;
 	(*h)->key = -9999;
@@ -127,22 +127,22 @@ int initializeBST(Node** h) {
 
 
 
-void recursiveInorder(Node* ptr)
+void recursiveInorder(Node* ptr)  //오름차순 재귀
 {
 	if(ptr) {
-		recursiveInorder(ptr->left);
-		printf(" [%d] ", ptr->key);
-		recursiveInorder(ptr->right);
+		recursiveInorder(ptr->left);  //재귀 왼쪽 출력
+		printf(" [%d] ", ptr->key);  //최상위 노드 출력
+		recursiveInorder(ptr->right);  //재귀 오른쪽 출력
 	}
 }
 
 
-void iterativeInorder(Node* node)
+void iterativeInorder(Node* node)  //오름차순 (스택)
 {
-	for(;;)
+	for(;;)  //무한반복
 	{
 		for(; node; node = node->left)
-			push(node);
+			push(node);  //작으면 push
 		node = pop();
 
 		if(!node) break;
@@ -153,7 +153,7 @@ void iterativeInorder(Node* node)
 }
 
 
-void levelOrder(Node* ptr)
+void levelOrder(Node* ptr)  //최상위에서 하위로 (큐)
 {
 
 	if(!ptr) return;
@@ -179,9 +179,9 @@ void levelOrder(Node* ptr)
 }
 
 
-int insert(Node* head, int key)
+int insert(Node* head, int key)  //노드 삽입
 {
-	Node* newNode = (Node*)malloc(sizeof(Node));
+	Node* newNode = (Node*)malloc(sizeof(Node));  //메모리 할당
 	newNode->key = key;
 	newNode->left = NULL;
 	newNode->right = NULL;
@@ -198,9 +198,9 @@ int insert(Node* head, int key)
 
 		if(ptr->key == key) return 1;
 
-		parentNode = ptr;
+		parentNode = ptr;  //부모노드 계속 추적
 
-		if(ptr->key < key)
+		if(ptr->key < key)  //비교해서 크면 오른쪽 작으면 왼쪽
 			ptr = ptr->right;
 		else
 			ptr = ptr->left;
@@ -214,7 +214,7 @@ int insert(Node* head, int key)
 }
 
 
-int deleteNode(Node* head, int key)
+int deleteNode(Node* head, int key)  //노드 삭제
 {
 	if (head == NULL) {
 		printf("\n Nothing to delete!!\n");
@@ -250,7 +250,7 @@ int deleteNode(Node* head, int key)
 		return -1;
 	}
 
-	if(ptr->left == NULL && ptr->right == NULL)
+	if(ptr->left == NULL && ptr->right == NULL)  //leaf 일때
 	{
 		if(parent != NULL) { 
 			if(parent->left == ptr)
@@ -267,7 +267,7 @@ int deleteNode(Node* head, int key)
 		return 1;
 	}
 
-	if ((ptr->left == NULL || ptr->right == NULL))
+	if ((ptr->left == NULL || ptr->right == NULL))  //한쪽만 하위 노드가 있을 때
 	{
 		Node* child;
 		if (ptr->left != NULL)
@@ -316,7 +316,7 @@ int deleteNode(Node* head, int key)
 }
 
 
-void freeNode(Node* ptr)
+void freeNode(Node* ptr)  //메모리 해제
 {
 	if(ptr) {
 		freeNode(ptr->left);
@@ -344,7 +344,7 @@ int freeBST(Node* head)
 
 
 
-Node* pop()
+Node* pop()  //pop 함수
 {
 	if (top < 0) return NULL;
 	return stack[top--];
@@ -356,7 +356,7 @@ void push(Node* aNode)
 }
 
 
-void printStack()
+void printStack()  //스택 출력
 {
 	int i = 0;
 	printf("--- stack ---\n");
@@ -367,7 +367,7 @@ void printStack()
 }
 
 
-Node* deQueue()
+Node* deQueue()  
 {
 	if (front == rear) {
 
